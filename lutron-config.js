@@ -25,11 +25,11 @@ module.exports = function (RED) {
         };
         this.sendLutronCommand = function (devId, val) {
             var str = '#OUTPUT,' + devId + ',1,' + val;
-            this.telnet.getSocket().write(str + '\n');
+            this.telnet.getSocket().write(str + '\r\n');
         };
         this.sendLutronStatus = function (devId) {
             var str = '?OUTPUT,' + devId + ',1';
-            this.telnet.getSocket().write(str + '\n');
+            this.telnet.getSocket().write(str + '\r\n');
         };
         this.telnet.on('data', (function (self, pkt) {
             self.lutronRecv(pkt);
@@ -49,7 +49,7 @@ module.exports = function (RED) {
             console.log('telent failed login');
         });
         this.lutronSend = function (msg, fn) {
-            this.telent.getSocket().write(msg + '\n', fn);
+            this.telent.getSocket().write(msg + '\r\n', fn);
         }
         this.lutrongUpdate = function (deviceId, fn) {
             this.lutronSend('?OUTPUT,' + deviceId + ',1', fn);
